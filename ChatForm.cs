@@ -10,7 +10,6 @@ namespace ChatboxApp {
         private readonly Button submitButton;
         private readonly Button clearButton;
         private readonly CheckBox autoSubmitCheckBox;
-        private readonly CheckBox clearOnSendCheckBox;
         private readonly CheckBox alwaysOnTopCheckBox;
 
         public ChatForm() {
@@ -73,13 +72,6 @@ namespace ChatboxApp {
                                 Dock = DockStyle.Fill,
                                 FlatStyle = FlatStyle.System,
                             }),
-                            (clearOnSendCheckBox = new CheckBox {
-                                Text = "Clear On Send",
-                                AutoSize = true,
-                                Dock = DockStyle.Fill,
-                                FlatStyle = FlatStyle.System,
-                                Checked = true,
-                            }),
                             (submitButton = new Button {
                                 Text = "Send",
                                 AutoSize = true,
@@ -127,7 +119,8 @@ namespace ChatboxApp {
 
         private void OnSubmitButtonClick(object? sender, EventArgs e) {
             chatSender.SendText();
-            if (clearOnSendCheckBox.Checked) inputBox.Clear();
+            if (!inputBox.Focused) inputBox.Focus();
+            inputBox.SelectAll();
         }
 
         private void OnClearButtonClick(object? sender, EventArgs e) {
