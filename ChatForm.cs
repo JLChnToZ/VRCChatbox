@@ -43,10 +43,9 @@ namespace ChatboxApp {
                         AutoSize = true,
                         AutoSizeMode = AutoSizeMode.GrowAndShrink,
                         RowCount = 1,
-                        ColumnCount = 6,
+                        ColumnCount = 5,
                         ColumnStyles = {
                             new ColumnStyle(SizeType.Percent, 100F),
-                            new ColumnStyle(SizeType.AutoSize),
                             new ColumnStyle(SizeType.AutoSize),
                             new ColumnStyle(SizeType.AutoSize),
                             new ColumnStyle(SizeType.AutoSize),
