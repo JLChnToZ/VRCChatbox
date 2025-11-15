@@ -78,7 +78,7 @@ namespace ChatboxApp {
                     hasNonForcedSendPending = false;
                     if (!textChangedSinceLastSend) return;
                 }
-            } else 
+            } else
                 hasForcedSendPending = true;
             lastSendRequestTime = DateTime.UtcNow;
             sendTextThrottler.Request();
@@ -99,7 +99,7 @@ namespace ChatboxApp {
 
         void SendMessage(string path, params object[] args) {
             if (endpoint is null) throw new InvalidOperationException("Endpoint is not set.");
-            lock(stream) {
+            lock (stream) {
                 var pos = stream.Position;
                 new OscMessage(path, args).Write(writer);
                 if (!stream.TryGetBuffer(out var buffer)) return;
