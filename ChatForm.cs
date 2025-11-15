@@ -103,7 +103,7 @@ namespace ChatboxApp {
             inputBox.GotFocus += OnInputBoxFocus;
             inputBox.LostFocus += OnInputBoxFocusLost;
             inputBox.TextChanged += OnInputBoxTextChanged;
-            endpointBox.Enter += OnEndPointBoxEnter;
+            endpointBox.Leave += OnEndPointBoxLeave;
             submitButton.Click += OnSubmitButtonClick;
             clearButton.Click += OnClearButtonClick;
             autoSubmitCheckBox.CheckedChanged += OnAutoSubmitCheckBoxCheckedChanged;
@@ -144,7 +144,7 @@ namespace ChatboxApp {
             TopMost = alwaysOnTopCheckBox.Checked;
         }
 
-        private void OnEndPointBoxEnter(object? sender, EventArgs e) {
+        private void OnEndPointBoxLeave(object? sender, EventArgs e) {
             if (!chatSender.TrySetDestination(endpointBox.Text)) endpointBox.Text = chatSender.Destination;
         }
 
