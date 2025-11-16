@@ -21,13 +21,9 @@ namespace ChatboxApp {
         public bool AcquireNextSafeTime(out TimeSpan nextWaitTime) {
             var now = DateTime.UtcNow;
             if (isFull) {
-                var elapsed = now - eventTimestampsDeque[head];
-                if (elapsed < interval) {
-                    nextWaitTime = interval - elapsed;
-                    return false;
-                }
+                nextWaitTime = now + interval - eventTimestampsDeque[head];
+                if (nextWaitTime > TimeSpan.Zero) return false;
                 head = (head + 1) % eventTimestampsDeque.Length;
-                isFull = false;
             }
             eventTimestampsDeque[tail] = now;
             tail = (tail + 1) % eventTimestampsDeque.Length;
