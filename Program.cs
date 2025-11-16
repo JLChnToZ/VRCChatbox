@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("VRCChatbox")]
 [assembly: AssemblyDescription("A simple input field for VRChat chat box with better support of IME.")]
 [assembly: AssemblyCopyright("Copyright 2025 Jeremy Lam aka. Vistanz. Licensed under MIT.")]
-[assembly: AssemblyVersion("0.0.2.0")]
-[assembly: AssemblyFileVersion("0.0.2.0")]
-[assembly: AssemblyInformationalVersion("0.0.2")]
+[assembly: AssemblyVersion("0.0.3.0")]
+[assembly: AssemblyFileVersion("0.0.3.0")]
+[assembly: AssemblyInformationalVersion("0.0.3")]
 
 namespace ChatboxApp {
     internal static class Program {
