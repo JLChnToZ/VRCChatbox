@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("VRCChatbox")]
 [assembly: AssemblyProduct("VRCChatbox")]
@@ -15,7 +16,10 @@ namespace ChatboxApp {
         [STAThread]
         static void Main() {
             ApplicationConfiguration.Initialize();
-            Application.Run(new ChatForm());
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+#pragma warning disable CA1416 // Warning still showing regardless of the platform check
+                Application.Run(new ChatForm());
+#pragma warning restore CA1416
         }
     }
 }

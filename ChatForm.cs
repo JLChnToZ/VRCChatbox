@@ -1,8 +1,10 @@
 using System;
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace ChatboxApp {
+    [SupportedOSPlatform("windows")]
     public class ChatForm : Form {
         private readonly ChatSender chatSender;
         private readonly TextBox inputBox;
@@ -142,9 +144,7 @@ namespace ChatboxApp {
 
         protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
-            if (disposing) {
-                chatSender.Dispose();
-            }
+            chatSender.Dispose();
         }
     }
 }

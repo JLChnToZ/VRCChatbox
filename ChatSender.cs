@@ -2,14 +2,13 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using OscCore;
 using OscCore.LowLevel;
 
 namespace ChatboxApp {
     public class ChatSender : IDisposable {
         static readonly object TRUE = true, FALSE = false;
-        private readonly DynamicThrottler sendTextThrottler;
+        private readonly DynamicThrottler sendTextSoftThrottler, sendTextHardThrottler;
         private readonly UdpClient client;
         private readonly MemoryStream stream;
         private readonly OscWriter writer;
@@ -20,8 +19,7 @@ namespace ChatboxApp {
         private bool textChangedSinceLastSend;
         private bool sendTyping = true;
         private bool disposed;
-        private bool hasNonForcedSendPending, hasForcedSendPending;
-        private DateTime lastSendRequestTime = DateTime.MinValue;
+        private bool hasForcedSendPending;
 
         public string Destination {
             get => endpoint?.ToString() ?? "";
@@ -52,10 +50,12 @@ namespace ChatboxApp {
             stream = new MemoryStream();
             writer = new OscWriter(stream);
             endpoint = new IPEndPoint(IPAddress.Loopback, 9000);
-            sendTextThrottler = new DynamicThrottler(TimeSpan.FromSeconds(5), 3) {
+            sendTextHardThrottler = new DynamicThrottler(TimeSpan.FromSeconds(5), 3) {
                 BufferTime = TimeSpan.FromSeconds(0.5),
             };
-            sendTextThrottler.Callback += SendTextActual;
+            sendTextHardThrottler.Callback += SendTextActual;
+            sendTextSoftThrottler = new DynamicThrottler(TimeSpan.FromSeconds(1), 1);
+            sendTextSoftThrottler.Callback += sendTextHardThrottler.Request;
         }
 
         ~ChatSender() => Dispose(false);
@@ -68,20 +68,12 @@ namespace ChatboxApp {
             return false;
         }
 
-        public async void SendText(bool forced = true) {
-            if (!forced) {
-                if (!textChangedSinceLastSend || hasNonForcedSendPending) return;
-                var threshold = TimeSpan.FromSeconds(1) - (DateTime.UtcNow - lastSendRequestTime);
-                if (threshold > TimeSpan.Zero) {
-                    hasNonForcedSendPending = true;
-                    await Task.Delay(threshold);
-                    hasNonForcedSendPending = false;
-                    if (!textChangedSinceLastSend) return;
-                }
-            } else
+        public void SendText(bool forced = true) {
+            if (forced) {
                 hasForcedSendPending = true;
-            lastSendRequestTime = DateTime.UtcNow;
-            sendTextThrottler.Request();
+                sendTextHardThrottler.Request();
+            } else if (textChangedSinceLastSend)
+                sendTextSoftThrottler.Request();
         }
 
         void SendTextActual() {
