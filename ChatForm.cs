@@ -18,7 +18,7 @@ namespace ChatboxApp {
         public ChatForm() {
             chatSender = new ChatSender();
             localizer = new Localizer();
-            Text = "VRCChatbox";
+            Text = localizer.T("Window.Title");
             ClientSize = new Size(720, 240);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             ShowIcon = false;
