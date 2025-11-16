@@ -7,6 +7,7 @@ namespace ChatboxApp {
     [SupportedOSPlatform("windows")]
     public class ChatForm : Form {
         private readonly ChatSender chatSender;
+        private readonly Localizer localizer;
         private readonly TextBox inputBox;
         private readonly TextBox endpointBox;
         private readonly Button submitButton;
@@ -16,6 +17,7 @@ namespace ChatboxApp {
 
         public ChatForm() {
             chatSender = new ChatSender();
+            localizer = new Localizer();
             Text = "VRCChatbox";
             ClientSize = new Size(720, 240);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -57,31 +59,31 @@ namespace ChatboxApp {
                             (endpointBox = new TextBox {
                                 Dock = DockStyle.Fill,
                                 Text = chatSender.Destination,
-                                PlaceholderText = "Destination (IP:Port)",
+                                PlaceholderText = localizer.T("Endpoint.Placeholder"),
                                 ImeMode = ImeMode.Off,
                             }),
                             (alwaysOnTopCheckBox = new CheckBox {
-                                Text = "Always On Top",
+                                Text = localizer.T("Check.AlwaysOnTop"),
                                 AutoSize = true,
                                 Dock = DockStyle.Fill,
                                 FlatStyle = FlatStyle.System,
                                 Checked = TopMost,
                             }),
                             (autoSubmitCheckBox = new CheckBox {
-                                Text = "Auto Send",
+                                Text = localizer.T("Check.AutoSend"),
                                 AutoSize = true,
                                 Dock = DockStyle.Fill,
                                 FlatStyle = FlatStyle.System,
                             }),
                             (submitButton = new Button {
-                                Text = "Send",
+                                Text = localizer.T("Button.Send"),
                                 AutoSize = true,
                                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
                                 Dock = DockStyle.Fill,
                                 FlatStyle = FlatStyle.System,
                             }),
                             (clearButton = new Button {
-                                Text = "Clear",
+                                Text = localizer.T("Button.Clear"),
                                 AutoSize = true,
                                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
                                 Dock = DockStyle.Fill,

@@ -1,0 +1,8 @@
+{
+  "Window.Title": "VRCChatbox",
+  "Endpoint.Placeholder": "Destination (IP:Port)",
+  "Check.AlwaysOnTop": "Always On Top",
+  "Check.AutoSend": "Auto Send",
+  "Button.Send": "Send",
+  "Button.Clear": "Clear"
+}

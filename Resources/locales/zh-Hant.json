@@ -1,0 +1,8 @@
+{
+  "Window.Title": "VRCChatbox",
+  "Endpoint.Placeholder": "目的地 (IP:埠)",
+  "Check.AlwaysOnTop": "始終置頂",
+  "Check.AutoSend": "自動發送",
+  "Button.Send": "發送",
+  "Button.Clear": "清除"
+}
